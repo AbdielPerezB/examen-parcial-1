@@ -48,8 +48,8 @@ async def update(continente: Continente):
     
     found=False
     
-    for index, saved in enumerate(continentes_lista):
-        if saved.id == continente.id:
+    for index, aux in enumerate(continentes_lista):
+        if aux.id == continente.id:
            continentes_lista[index] = continente  #accedemos al indice de la lista que hemos encontrado y actualizamos con el nuevo usuario
            found=True
            
@@ -57,3 +57,17 @@ async def update(continente: Continente):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     else:
         return continente
+    
+#Delete
+@routerContinentes.delete("/continent/{id}", status_code=status.HTTP_204_NO_CONTENT)#El código 204 por naturaleza no devuelve nada, solo indica el éxito
+async def delete(id:int):
+    
+    found=False
+    
+    for index, aux in enumerate(continentes_lista):
+        if aux.id ==id:
+           del continentes_lista[index]
+           found=True
+       
+    if not found:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
