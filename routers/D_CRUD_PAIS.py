@@ -22,7 +22,7 @@ with open('CountryTable.csv') as archivo:
 #CRUD-router
 routerPaises = APIRouter()
 
-#Get con Filtro Path
+#Get con Filtro por region
 @routerPaises.get("/{_region}/",status_code=status.HTTP_200_OK)
 async def read(_region: str):
     paisessolo = filter(lambda pais:  pais.region == _region, paises_lista)
@@ -30,16 +30,17 @@ async def read(_region: str):
         return list(paisessolo)
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-'''
-@routerPaises.get("/{_region}/{id}",status_code=status.HTTP_200_OK)
-async def read(_region: str):
+
+#Get con Filtro por region y id
+@routerPaises.get("/{_region}/{_id}",status_code=status.HTTP_200_OK)
+async def read(_region: str, _id: int):
     paises_por_region = filter(lambda paises:  paises.region == _region, paises_lista)
-    pais_por_id = filter(lambda pais: pais.id == id, list(paises_por_region))
+    pais_por_id = filter(lambda pais: pais.id == _id, list(paises_por_region))
     try:
         return list(pais_por_id)[0]
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-'''
+
 '''
 #Post (Create). 
 @routerPaises.post("/Paises/", response_model= Paises, status_code=status.HTTP_201_CREATED)
