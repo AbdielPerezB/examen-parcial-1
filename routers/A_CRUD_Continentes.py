@@ -16,9 +16,10 @@ with open('CountryTable.csv') as archivo:
             aux = Continente(id=i, nombre=row[2])
             continentes_lista.append(aux)
 
-#Ahoraque ya tenemos los datos del csv, hacemos el CRUD del router
+################### Ahoraque ya tenemos los datos del csv, hacemos el CRUD del router ########################
 routerContinentes = APIRouter()
 
+#Get
 @routerContinentes.get("/continent/", status_code=status.HTTP_200_OK)
 async def imprimirContinentes():
     return continentes_lista
@@ -30,3 +31,13 @@ async def imprimirContinentes(id: int):
         return list(continentes)[0]
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+#Post
+@routerContinentes.post("/continent/")
+async def usersclass(continente:Continente):
+    for aux in continentes_lista:
+        if aux.id == continente.id:  #Si el Id de los usuarios en la lista es igual al Id del usuario nuevo
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="El continente ya existe")
+    else:
+        continentes_lista.append(continente)
+        return continente
