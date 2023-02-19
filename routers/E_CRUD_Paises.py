@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 import csv
 
-routerRegiones = APIRouter()
+routerPaises = APIRouter()
 
 
 class Paises (BaseModel):
@@ -22,7 +22,7 @@ class Paises (BaseModel):
 #Leemos los datos del csv y los pasamos a una lista#
 paises_list=[]
 
-with open('CountryTable.csv') as archivo:
+with open('routers/CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
         #[0]=code, [1]=name, [2]=continent, [3]=region, [4]=surface_area, [5]=independence_year, [6]=population, 
@@ -46,12 +46,12 @@ with open('CountryTable.csv') as archivo:
 #gnp,gnp_old,local_name,government_form,head_of_state,capital,code2
 
 #Función Get:
-@routerRegiones.get("/continent/region/country/", status_code=status.HTTP_200_OK)
-async def asia():
+@routerPaises.get("/continent/region/country/", status_code=status.HTTP_200_OK)
+async def paises():
     return paises_list
 
-@routerRegiones.get("/continent/region/country/{id}", status_code=status.HTTP_200_OK)
-async def asia(id: int):
+@routerPaises.get("/continent/region/country/{id}", status_code=status.HTTP_200_OK)
+async def paises(id: int):
     region = filter(lambda regiones: regiones.Id == id, paises_list)
     try:
         return list(region)[0]
@@ -60,8 +60,8 @@ async def asia(id: int):
     
     
 #Función Post (Create). Es decir, crea un nuevo usuario. Implementamos también el código de respuesta
-@routerRegiones.post("/continent/region/country/", response_model=Paises, status_code=status.HTTP_201_CREATED)
-async def asia(region:Paises):
+@routerPaises.post("/continent/region/country/", response_model=Paises, status_code=status.HTTP_201_CREATED)
+async def paises(region:Paises):
         
     for saved_regiones in paises_list:
         if saved_regiones.Id == region.Id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
@@ -73,8 +73,8 @@ async def asia(region:Paises):
     #http://127.0.0.1:8000/usersclass/
 
     #***Put (update). Es decir, de un usuario que YA EXISTE, lo va a modificar
-@routerRegiones.put("/continent/region/country/", response_model=Paises, status_code=status.HTTP_201_CREATED)
-async def asia(region:Paises):
+@routerPaises.put("/continent/region/country/", response_model=Paises, status_code=status.HTTP_201_CREATED)
+async def paises(region:Paises):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
@@ -92,8 +92,8 @@ async def asia(region:Paises):
     
     
         #***Delete
-@routerRegiones.delete("/continent/region/country/{id}", status_code=status.HTTP_204_NO_CONTENT) #Aquí no es necesario poner todo el usuario, con el id basta para eoncontrarlo y eliminarlo
-async def asia(id:int):
+@routerPaises.delete("/continent/region/country/{id}", status_code=status.HTTP_204_NO_CONTENT) #Aquí no es necesario poner todo el usuario, con el id basta para eoncontrarlo y eliminarlo
+async def paises(id:int):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
