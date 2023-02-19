@@ -23,11 +23,11 @@ routerRegiones = APIRouter()
 #gnp,gnp_old,local_name,government_form,head_of_state,capital,code2
 
 #Función Get:
-@routerRegiones.get("/asia2/",status_code=status.HTTP_200_OK)
+@routerRegiones.get("/asia/",status_code=status.HTTP_200_OK)
 async def asia():
     return regiones_lista
 
-@routerRegiones.get("/asia2/{id}", status_code=status.HTTP_200_OK)
+@routerRegiones.get("/asia/{id}", status_code=status.HTTP_200_OK)
 async def asia(id: int):
     region = filter(lambda regiones: regiones.Id == id, regiones_lista)
     try:
@@ -37,7 +37,7 @@ async def asia(id: int):
     
     
 #Función Post (Create). Es decir, crea un nuevo usuario. Implementamos también el código de respuesta
-@routerRegiones.post("/asia2/", response_model=Regiones, status_code=status.HTTP_201_CREATED)
+@routerRegiones.post("/asia/", response_model=Regiones, status_code=status.HTTP_201_CREATED)
 async def asia(region:Regiones):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
@@ -52,7 +52,7 @@ async def asia(region:Regiones):
     #http://127.0.0.1:8000/usersclass/
 
     #***Put (update). Es decir, de un usuario que YA EXISTE, lo va a modificar
-@routerRegiones.put("/asia2/", response_model=Regiones, status_code=status.HTTP_201_CREATED)
+@routerRegiones.put("/asia/", response_model=Regiones, status_code=status.HTTP_201_CREATED)
 async def asia(region:Regiones):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
@@ -72,7 +72,7 @@ async def asia(region:Regiones):
     
     
         #***Delete
-@routerRegiones.delete("/asia2/{id}", status_code=status.HTTP_204_NO_CONTENT) #Aquí no es necesario poner todo el usuario, con el id basta para eoncontrarlo y eliminarlo
+@routerRegiones.delete("/asia/{id}", status_code=status.HTTP_204_NO_CONTENT) #Aquí no es necesario poner todo el usuario, con el id basta para eoncontrarlo y eliminarlo
 async def asia(id:int):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
