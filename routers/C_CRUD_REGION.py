@@ -12,11 +12,11 @@ class RegionesTOTAL (BaseModel):
 regionestotal_lista = []  #guaradamos los datos del csv en una lista
 
 
-with open('CountryTable.csv') as archivo:
+with open('routers/CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
         if(i !=0 ): #Imite el primer elemento porque es el encabezado
-            aux = RegionesTOTAL(id=i, nombre=row[2], continent=row[3])
+            aux = RegionesTOTAL(id=i, nombre=row[2], continent=row[2], region = row[3])
             regionestotal_lista.append(aux)
 
 #CRUD-router
@@ -53,8 +53,8 @@ async def update(regiontotal:RegionesTOTAL):
     found=False #Usamos bandera found para verificar si hemos encontrado lo solicitado
     for index, aux in enumerate(regionestotal_lista):
         if aux.id == id.id: 
-        regionestotal_lista[index] = regiontotal 
-        found=True
+            regionestotal_lista[index] = regiontotal 
+            found=True
 
     if not found:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
@@ -67,7 +67,7 @@ async def delete(id:int):
     found=False #Usamos bandera found para verificar si hemos encontrado lo solicitado
     for index, aux in enumerate(regionestotal_lista):
         if aux.id == id.id: 
-        del regionestotal_lista[index]
+            del regionestotal_lista[index]
         found=True
 
     if not found:
