@@ -3,40 +3,44 @@ from pydantic import BaseModel
 import csv
 
 
-class Paises (BaseModel):
+class Paise (BaseModel):
     id: int
     nombre: str
-    code: str
+    region: str
 
 
-paissolo_lista = []  # guaradamos los datos del csv en una lista
+paises_lista = []
 
 
-with open('routers/CountryTable.csv') as archivo:
+with open('CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
         if (i != 0):  # Imite el primer elemento porque es el encabezado
-            aux = Paises(id=i, nombre=row[2], code=row[2])
-            paissolo_lista.append(aux)
+            aux = Paise(id=i, nombre=row[1], region=row[3])
+            paises_lista.append(aux)
 
 #CRUD-router
 routerPaises = APIRouter()
 
-#Get:
-@routerPaises.get("/Paises/",status_code=status.HTTP_200_OK)
-async def read():
-    return paissolo_lista
-
 #Get con Filtro Path
-@routerPaises.get("/Paises/{id}",status_code=status.HTTP_200_OK)
-async def read(id: int):#Esta variable tiene que ser la misma que en la línea 57
-    paisessolo = filter(lambda pais: id.id == id, paissolo_lista)
+@routerPaises.get("/{_region}/",status_code=status.HTTP_200_OK)
+async def read(_region: str):
+    paisessolo = filter(lambda pais:  pais.region == _region, paises_lista)
     try:
-        return list(paisessolo)[0]
+        return list(paisessolo)
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-
-
+'''
+@routerPaises.get("/{_region}/{id}",status_code=status.HTTP_200_OK)
+async def read(_region: str):
+    paises_por_region = filter(lambda paises:  paises.region == _region, paises_lista)
+    pais_por_id = filter(lambda pais: pais.id == id, list(paises_por_region))
+    try:
+        return list(pais_por_id)[0]
+    except:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+'''
+'''
 #Post (Create). 
 @routerPaises.post("/Paises/", response_model= Paises, status_code=status.HTTP_201_CREATED)
 async def create(pais:Paises): 
@@ -72,3 +76,4 @@ async def delete(id:int):
 
     if not found:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        '''
