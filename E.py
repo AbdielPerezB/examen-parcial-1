@@ -22,7 +22,7 @@ class Paises (BaseModel):
 #Leemos los datos del csv y los pasamos a una lista#
 paises_list=[]
 
-with open('routers/CountryTable.csv') as archivo:
+with open('CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
         #[0]=code, [1]=name, [2]=continent, [3]=region, [4]=surface_area, [5]=independence_year, [6]=population, 
@@ -41,7 +41,6 @@ with open('routers/CountryTable.csv') as archivo:
                 head_of_state=row[12]
                 )
             paises_list.append(aux)
-
  
     #code,name,continent,region,surface_area,independence_year,population,life_expectancy,
 #gnp,gnp_old,local_name,government_form,head_of_state,capital,code2
@@ -63,9 +62,7 @@ async def asia(id: int):
 #Función Post (Create). Es decir, crea un nuevo usuario. Implementamos también el código de respuesta
 @routerRegiones.post("/continent/region/country/", response_model=Paises, status_code=status.HTTP_201_CREATED)
 async def asia(region:Paises):
-    
-    found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
-    
+        
     for saved_regiones in paises_list:
         if saved_regiones.Id == region.Id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="El pais ya existe")
@@ -87,7 +84,6 @@ async def asia(region:Paises):
            found=True
            
     if not found:
-        #return {"error":"No se ha actualizado el usuario"}
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     else:
         return region
@@ -109,5 +105,3 @@ async def asia(id:int):
        
     if not found:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        
-    
