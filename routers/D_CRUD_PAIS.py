@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import csv
 
 
-class Paise (BaseModel):
+class Pais (BaseModel):
     id: int
     nombre: str
     region: str
@@ -16,7 +16,7 @@ with open('CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
         if (i != 0):  # Imite el primer elemento porque es el encabezado
-            aux = Paise(id=i, nombre=row[1], region=row[3])
+            aux = Pais(id=i, nombre=row[1], region=row[3])
             paises_lista.append(aux)
 
 #CRUD-router
@@ -40,6 +40,26 @@ async def read(_region: str, _id: int):
         return list(pais_por_id)[0]
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    
+#Post (Create)
+#Ejemplo para acción post.
+#   path: /Caribbean/
+#   result: {
+#               id: <id>
+#               nombre: <nombre>
+#               region: Caribbean
+#           }
+#Es decir, el nombre de la región en el path sera la región asignada al nuevo país creado en el post
+@routerPaises.post("/{_region}/", response_model= Pais, status_code=status.HTTP_201_CREATED)
+async def create(nuevoPais: Pais, _region: str):
+    for paisAux in paises_lista:
+        if paisAux.id == nuevoPais.id:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Id repetido")
+    else:
+        nuevoPais.region = _region
+        paises_lista.append(nuevoPais)
+        return nuevoPais
+
 
 '''
 #Post (Create). 
