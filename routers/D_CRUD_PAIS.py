@@ -60,18 +60,27 @@ async def create(nuevoPais: Pais, _region: str):
         paises_lista.append(nuevoPais)
         return nuevoPais
 
-
-'''
-#Post (Create). 
-@routerPaises.post("/Paises/", response_model= Paises, status_code=status.HTTP_201_CREATED)
-async def create(pais:Paises): 
-    for aux in paissolo_lista:
-        if aux.id == id.id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Este pais ya existe")
+#Put (update)
+#Ejemplo para acción put.
+#   path: /Caribbean/
+#   result: {
+#               id: <id>
+#               nombre: <nombre>
+#               region: <nuevo_region>
+#           }
+#Aquí todos los datos se actualizan
+@routerPaises.put("/{_region}/", response_model=Pais, status_code=status.HTTP_201_CREATED)
+async def update(nuevoPais: Pais):
+    found = False
+    for index, saved_pais in enumerate(paises_lista):
+        if saved_pais.id == nuevoPais.id:
+            paises_lista[index] = nuevoPais
+            found = True
+    if not found:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El país no existe")
     else:
-       paissolo_lista.append(pais)
-    return pais
-
+        return nuevoPais
+'''
 #Put 
 @routerPaises.put("/Paises/", response_model= Paises, status_code=status.HTTP_201_CREATED)
 async def update(pais:Paises):
