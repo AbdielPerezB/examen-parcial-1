@@ -95,16 +95,3 @@ async def delete(_region: str, _id: int):#La región la pedimos solo para verifi
             found = True
     if not found:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="id no econtrado")
-'''
-#Delete  
-@routerPaises.put("/Paises/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete(id:int):
-    found=False #Usamos bandera found para verificar si hemos encontrado lo solicitado
-    for index, aux in enumerate(paissolo_lista):
-        if aux.id == id.id: 
-            del paissolo_lista[index]
-        found=True
-
-    if not found:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        '''
