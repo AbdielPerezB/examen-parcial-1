@@ -80,21 +80,22 @@ async def update(nuevoPais: Pais):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El país no existe")
     else:
         return nuevoPais
-'''
-#Put 
-@routerPaises.put("/Paises/", response_model= Paises, status_code=status.HTTP_201_CREATED)
-async def update(pais:Paises):
-    found=False #Usamos bandera found para verificar si hemos encontrado lo solicitado
-    for index, aux in enumerate(paissolo_lista):
-        if aux.id == id.id: 
-           paissolo_lista[index] = pais 
-        found=True
-
+    
+#Delete
+#Ejemplo para acción delete.
+#   path: /Caribbean/{id}
+#   result: Se borra todo el objeto
+#Aquí funciona igual cualsea 
+@routerPaises.delete("/{_region}/{_id}",status_code=status.HTTP_204_NO_CONTENT)
+async def delete(_region: str, _id: int):#La región la pedimos solo para verificar que no este vacio, el id para borrar el objeto
+    found = False
+    for index, saved_pais in enumerate(paises_lista):
+        if saved_pais.id == _id:
+            del paises_lista[index]
+            found = True
     if not found:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-    else:
-        return pais
-
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="id no econtrado")
+'''
 #Delete  
 @routerPaises.put("/Paises/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete(id:int):
