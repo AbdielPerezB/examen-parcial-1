@@ -22,7 +22,7 @@ class Paises (BaseModel):
 #Leemos los datos del csv y los pasamos a una lista#
 paises_list=[]
 
-with open('routers/CountryTable.csv') as archivo:
+with open('CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
         #[0]=code, [1]=name, [2]=continent, [3]=region, [4]=surface_area, [5]=independence_year, [6]=population, 

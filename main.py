@@ -57,7 +57,7 @@ with open('CountryTable.csv') as archivo:
 async def read():
     return paises_lista
 
-@app.get("/continent/region/{code}")
+@app.get("/continent/region/{code}/")
 async def read(code: str):
     paises = filter(lambda pais: pais.code == code, paises_lista)
     try:
