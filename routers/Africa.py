@@ -25,11 +25,11 @@ routerRegiones = APIRouter()
 
 #Función Get:
 @routerRegiones.get("/africa/",status_code=status.HTTP_200_OK)
-async def asia():
+async def africa():
     return regiones_lista
 
 @routerRegiones.get("/africa/{id}", status_code=status.HTTP_200_OK)
-async def asia(id: int):
+async def africa(id: int):
     region = filter(lambda regiones: regiones.Id == id, regiones_lista)
     try:
         return list(region)[0]
@@ -39,7 +39,7 @@ async def asia(id: int):
     
 #Función Post (Create). Es decir, crea un nuevo usuario. Implementamos también el código de respuesta
 @routerRegiones.post("/africa/", response_model=Regiones, status_code=status.HTTP_201_CREATED)
-async def asia(region:Regiones):
+async def africa(region:Regiones):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
@@ -54,7 +54,7 @@ async def asia(region:Regiones):
 
     #***Put (update). Es decir, de un usuario que YA EXISTE, lo va a modificar
 @routerRegiones.put("/africa/", response_model=Regiones, status_code=status.HTTP_201_CREATED)
-async def asia(region:Regiones):
+async def africa(region:Regiones):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
@@ -74,7 +74,7 @@ async def asia(region:Regiones):
     
         #***Delete
 @routerRegiones.delete("/africa/{id}", status_code=status.HTTP_204_NO_CONTENT) #Aquí no es necesario poner todo el usuario, con el id basta para eoncontrarlo y eliminarlo
-async def asia(id:int):
+async def africa(id:int):
     
     found=False     #Usamos bandera found para verificar si hemos encontrado el usuario 
     
