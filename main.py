@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, status
-from routers import A_CRUD_Continentes_SinRepetir, Africa, Antarctica, asia, Europe, North_America, Oceania, Regiones, D_CRUD_PAIS
+
+from routers import A_CRUD_Continentes_SinRepetir, Africa, Antarctica, asia, Europe, North_America, Oceania, Regiones, D_CRUD_PAIS, E_CRUD_Paises
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -17,3 +18,4 @@ app.include_router(Regiones.routerRegiones)
 
 app.include_router(D_CRUD_PAIS.routerPaises)
 
+app.include_router(E_CRUD_Paises.routerPaises)
