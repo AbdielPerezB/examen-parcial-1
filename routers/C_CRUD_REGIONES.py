@@ -38,17 +38,17 @@ async def regiones(_id: int):
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
-'''
+
 #Post (Create). 
-@routerRegiones.post("/regionestotal/", response_model= RegionesTOTAL, status_code=status.HTTP_201_CREATED)
-async def create(regiontotal:RegionesTOTAL): 
+@routerRegiones.post("/continent/region/", response_model= Region, status_code=status.HTTP_201_CREATED)
+async def regiones(nuevaRegion:Region): 
     for aux in regionestotal_lista:
-        if aux.id == id.id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
+        if aux.id == nuevaRegion.id:  #Si el Id del usuario guardado es igual al Id del usuario nuevo
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Esta region ya existe")
     else:
-        regionestotal_lista.append(regiontotal)
-        return regiontotal
-
+        regionestotal_lista.append(nuevaRegion)
+        return nuevaRegion
+'''
 #Put 
 @routerRegiones.put("/regionestotal/", response_model= RegionesTOTAL, status_code=status.HTTP_201_CREATED)
 async def update(regiontotal:RegionesTOTAL):
