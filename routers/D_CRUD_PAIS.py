@@ -5,7 +5,7 @@ import csv
 
 class Pais (BaseModel):
     id: int
-    nombre: str
+    pais: str
     region: str
 
 
@@ -16,7 +16,7 @@ with open('CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
         if (i != 0):  # Imite el primer elemento porque es el encabezado
-            aux = Pais(id=i, nombre=row[1], region=row[3])
+            aux = Pais(id=i, pais=row[1], region=row[3])
             paises_lista.append(aux)
 
 #CRUD-router

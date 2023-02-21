@@ -4,17 +4,16 @@ import csv
 
 class Continente (BaseModel):
     id: int
-    nombre: str
+    continente: str
 
-#Leemos los datos del csv y los guardamos en una lista
-continentes_lista = []
-
-with open('CountryTable.csv') as archivo:
-    reader = csv.reader(archivo)
-    for i, row in enumerate(reader):
-        if(i != 0 ): #Omitimos el primer elemento porque es el encabezado
-            aux = Continente(id=i, nombre=row[2])
-            continentes_lista.append(aux)
+continentes_lista=[
+                Continente(id = 1, continente = "Asia"),
+                Continente(id = 2, continente = "Europe"),
+                Continente(id = 3, continente = "Africa"),
+                Continente(id = 4, continente = "North America"),
+                Continente(id = 5, continente = "Antarctica"),
+                Continente(id = 6, continente = "Oceania")
+                ]
 
 ################### Ahoraque ya tenemos los datos del csv, hacemos el CRUD del router ########################
 routerContinentes = APIRouter()
