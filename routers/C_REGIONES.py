@@ -3,37 +3,19 @@
 from fastapi import APIRouter, HTTPException, status
 #Importamos pydantic para obtener una entidad que pueda definir usuarios
 from pydantic import BaseModel
+import csv
             
 class Region (BaseModel):
     Id: int
     Region:str
 
-regiones_lista=[
-                Region(Id = 1, Region = "Antarctica"),
-                Region(Id = 2, Region = "Central Africa"),
-                Region(Id = 3, Region = "Eastern Africa"),
-                Region(Id = 4, Region = "Western Africa"),
-                Region(Id = 5, Region = "Southern Africa"),
-                Region(Id = 6, Region = "Northern Africa"),
-                Region(Id = 7, Region = "Middle East"),
-                Region(Id = 8, Region = "Southern and Central Asia"),
-                Region(Id = 9, Region = "Southeast Asia"),
-                Region(Id = 10, Region = "Eastern Asia"),
-                Region(Id = 11, Region = "Southern Europe"),
-                Region(Id = 12, Region = "Western Europe"),
-                Region(Id = 13, Region = "Eastern Europe"),
-                Region(Id = 14, Region = "Nordic Countries"),
-                Region(Id = 15, Region = "Baltic Countries"),
-                Region(Id = 16, Region = "British Islands"),
-                Region(Id = 17, Region = "Caribbean"),
-                Region(Id = 18, Region = "North America"),
-                Region(Id = 19, Region = "Central America"),
-                Region(Id = 20, Region = "Australia and New Zealand"),
-                Region(Id = 21, Region = "Polynesia"),
-                Region(Id = 22, Region = "Melanesia"),
-                Region(Id = 23, Region = "Micronesia"),
-                Region(Id = 24, Region = "Micronesia/Caribbean")
-                ]
+regiones_lista=[]
+with open('CountryTable.csv') as archivo:
+    reader = csv.reader(archivo)
+    for i, row in enumerate(reader):
+        if(i != 0 ): #Omitimos el primer elemento porque es el encabezado
+            aux = Region(Id=i, Region=row[2])
+            regiones_lista.append(aux)
 
 routerRegiones = APIRouter()
 

@@ -1,11 +1,11 @@
 from fastapi import FastAPI, HTTPException, status
-from routers import A_CRUD_Continentes_SinRepetir, Africa, Antarctica, asia, Europe, North_America, Oceania, Regiones, D_CRUD_PAIS, E_CRUD_Paises
+from routers import A_CRUD_Continentes, Africa, Antarctica, asia, Europe, North_America, Oceania, C_REGIONES, D_CRUD_PAIS, E_CRUD_Paises
 from pydantic import BaseModel
 import csv
 
 app = FastAPI()
 
-app.include_router(A_CRUD_Continentes_SinRepetir.routerContinentes)
+app.include_router(A_CRUD_Continentes.routerContinentes)
 
 app.include_router(asia.routerRegiones)
 app.include_router(North_America.routerRegiones)
@@ -14,7 +14,7 @@ app.include_router(Antarctica.routerRegiones)
 app.include_router(Oceania.routerRegiones)
 app.include_router(Europe.routerRegiones)
 
-app.include_router(Regiones.routerRegiones)
+app.include_router(C_REGIONES.routerRegiones)
 
 app.include_router(D_CRUD_PAIS.routerPaises)
 
