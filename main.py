@@ -1,11 +1,8 @@
 from fastapi import FastAPI, HTTPException, status
-from routers import A_CRUD_Continentes
 import csv
 from pydantic import BaseModel
 
 app = FastAPI()
-
-app.include_router(A_CRUD_Continentes.routerContinentes)
 
 #F)################### GET con todos los atributos de cada país. Usar ID=Code Country ##################
 class Pais (BaseModel):
