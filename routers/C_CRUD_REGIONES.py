@@ -3,40 +3,42 @@ from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 import csv
 
-class RegionesTOTAL (BaseModel):
+class Region (BaseModel):
     id: int 
-    nombre: str
-    continent: str
     region: str
+    continent: str
 
-regionestotal_lista = []  #guaradamos los datos del csv en una lista
+regionestotal_lista = []
 
 
-with open('routers/CountryTable.csv') as archivo:
+with open('CountryTable.csv') as archivo:
     reader = csv.reader(archivo)
     for i, row in enumerate(reader):
-        if(i !=0 ): #Imite el primer elemento porque es el encabezado
-            aux = RegionesTOTAL(id=i, nombre=row[2], continent=row[2], region = row[3])
+        if(i !=0 ): #Omite el primer elemento porque es el encabezado
+            #[0]=code, [1]=name, [2]=continent, [3]=region, [4]=surface_area, [5]=independence_year, [6]=population, 
+            # [7]=life_expectancy, [8]gnp, [9]=gnp_old, [10]=local_name, [11]=government_form, [12]=head_of_state
+            # [13]=capital, [14]=code2
+            aux = Region(id=i, region = row[3], continent=row[2])
             regionestotal_lista.append(aux)
 
 #CRUD-router
 routerRegiones = APIRouter()
 
 #Get:
-@routerRegiones.get("/regionestotal/",status_code=status.HTTP_200_OK)
-async def read():
+@routerRegiones.get("/continent/region/",status_code=status.HTTP_200_OK)
+async def regiones():
     return regionestotal_lista
 
 #Get con Filtro Path
-@routerRegiones.get("/regionestotal/{id}",status_code=status.HTTP_200_OK)
-async def read(id: int):#Esta variable tiene que ser la misma que en la línea 57
-    regionestotal = filter(lambda region: id.id == id, regionestotal_lista)
+@routerRegiones.get("/continent/region/{_id}",status_code=status.HTTP_200_OK)
+async def regiones(_id: int):
+    regionestotal = filter(lambda region: region.id == _id, regionestotal_lista)
     try:
         return list(regionestotal)[0]
     except:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
-
+'''
 #Post (Create). 
 @routerRegiones.post("/regionestotal/", response_model= RegionesTOTAL, status_code=status.HTTP_201_CREATED)
 async def create(regiontotal:RegionesTOTAL): 
@@ -73,3 +75,4 @@ async def delete(id:int):
     if not found:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
+'''
