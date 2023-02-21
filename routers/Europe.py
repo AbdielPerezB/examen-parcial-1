@@ -14,8 +14,8 @@ regiones_lista=[
                 Regiones(Id = 2, Region = "Western Europe"),
                 Regiones(Id = 3, Region = "Eastern Europe"),
                 Regiones(Id = 4, Region = "Nordic Countries"),
-                Regiones(Id = 4, Region = "Baltic Countries"),
-                Regiones(Id = 4, Region = "British Islands")
+                Regiones(Id = 5, Region = "Baltic Countries"),
+                Regiones(Id = 6, Region = "British Islands")
                 ]
 
 routerRegiones = APIRouter()
